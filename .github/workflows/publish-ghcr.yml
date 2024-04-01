@@ -1,0 +1,14 @@
+name: Docker Image CI for GHCR
+
+on: push
+
+jobs:
+  build_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and push image
+        run: |
+          docker login --username ykhade --password ${{secrets.GH_PAT}}
+          docker build . -t ghcr.io/ykhade/hello-world-ghcr:latest
+          docker push ghcr.io/ykhade/hello-world-ghcr:latest
